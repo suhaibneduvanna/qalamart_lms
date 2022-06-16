@@ -1,0 +1,80 @@
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <h4 class="card-title">Edit Course</h4>
+                        </div>
+                        {{!-- <p class="card-description">
+                            Basic form elements
+                        </p> --}}
+                        <br>
+                        <form class="forms-sample" id="edit_course_form" enctype="multipart/form-data">
+                            <input hidden name="id" type="text" value="{{course._id}}">
+                            <div class="form-group">
+                                <label for="cstitle">Course Title</label>
+                                <input value="{{course.Title}}" name="Title" type="text" class="form-control"
+                                    id="cstitle" placeholder="Course Title">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cscategory">Category</label>
+                                <select value="{{course.CsCategory}}" required name="CsCategory" class="form-control"
+                                    id="cscategory">
+                                    <option value="" selected disabled>Select Category</option>
+                                    <option>Calligraphy</option>
+                                    <option selected>{{course.CsCategory}}</option>
+
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="language">Course Language</label>
+                                <select required name="Language" class="form-control" id="language">
+                                    <option value="" selected disabled>Select Language</option>
+                                    <option selected>{{course.Language}}</option>
+                                    <option>Malayalam</option>
+                                    <option>English</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bdesc">Short Description</label>
+                                <textarea placeholder="Short describtion of your course" name="BriefDesc"
+                                    class="form-control" id="bdesc" rows="2"
+                                    maxlength="100">{{course.BriefDesc}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="desc">Description</label>
+                                <textarea name="Desc" placeholder="Describe about your course here" class="form-control"
+                                    id="desc" rows="5" maxlength="1000">{{course.Desc}}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Course Thumbnail</label>
+                                <input type="file" name="CsThumbnail" class="file-upload-default">
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" disabled
+                                        placeholder="Upload Thumbnail">
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Course Price &#8377</label>
+                                <input value="{{course.Price}}" name="Price" type="number" class="form-control"
+                                    id="price" placeholder="Price in rupees &#8377">
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                <button class="btn btn-light">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

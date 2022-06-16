@@ -1,0 +1,85 @@
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row d-flex justify-content-between p-3">
+                            <div>
+                                <h4 class="card-title pt-2">Users List</h4>
+                                <p class="card-description">
+
+                                </p>
+                            </div>
+                            <a href="/admin/add-user" type="button" class="btn btn-primary btn-icon-text">
+                                <i class="ti-plus btn-icon-prepend"></i>
+                                Add
+                            </a>
+                        </div>
+
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Profile
+                                        </th>
+                                        <th>
+                                            UID
+                                        </th>
+                                        <th>
+                                            Username
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Progress
+                                        </th>
+                                        <th>
+                                            Amount
+                                        </th>
+                                        <th>
+                                            Deadline
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each userList}}
+                                    <tr>
+                                        <td class="py-1">
+                                            <img src="../../images/faces/face1.jpg" alt="image" />
+                                        </td>
+                                        <td>
+                                            {{this.UID}}
+                                        </td>
+                                        <td>
+                                            {{this.Username}}
+                                        </td>
+                                         <td>
+                                            {{this.Email}}
+                                        </td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-success" role="progressbar"
+                                                    style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                                                    aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            $ 77.99
+                                        </td>
+                                        <td>
+                                            May 15, 2015
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

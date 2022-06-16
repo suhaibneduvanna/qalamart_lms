@@ -1,0 +1,53 @@
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Add User</h4>
+                        <p class="card-description">
+                            {{!-- Add new user --}}
+                        </p>
+                        <form id="add_user_form" class="forms-sample">
+                            <div class="form-group">
+                                <label for="exampleInputName1">Name</label>
+                                <input required name="Username" type="text" class="form-control" id="exampleInputName1"
+                                    placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail3">Email address</label>
+                                <input required name="Email" type="email" class="form-control" id="exampleInputEmail3"
+                                    placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail3">Phone</label>
+                                <input required name="Phone" type="tel" class="form-control" id="exampleInputEmail3"
+                                    placeholder="Phone">
+                            </div>
+                            <div class="form-group ">
+                                <label for="exampleInputEmail3">Password</label>
+
+                                <input onkeyup="validate_password1(this.value)" required name="Password" type="password"
+                                    class="form-control form-control-lg" id="password" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail3">Confirm Password</label>
+
+                                <input onkeyup="validate_password(this.value)" required name="CnfPassword" type="text"
+                                    class="form-control form-control-lg" id="cnfPass" placeholder="Confirm Password">
+
+                                <span id="error" style="display: none;" class="text-danger">Password doesnot
+                                    match</span>
+                            </div>
+
+
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                <button class="btn btn-light">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
