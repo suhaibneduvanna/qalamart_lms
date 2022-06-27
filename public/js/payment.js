@@ -1,12 +1,13 @@
 
-var price = document.getElementById("course_price").value * 100
-var course_id = document.getElementById("course_id").value
+var price ;
+var course_id;
 
 var orderId;
 
 
 function initiatePayment() {
-
+    course_id = document.getElementById("course_id").value
+    price = document.getElementById("course_price").value * 100
     $.ajax({
         url: "/user/init_payment",
         type: "post",

@@ -28,7 +28,7 @@ router.get('/', verifyLogin, (req, res) => {
 router.get('/dashboard', verifyLogin, async (req, res) => {
     let user = req.session.user
     let productsList = await adminHelpers.getProducts();
-    adminHelpers.getCourses().then((coursesList) => {
+    userHelpers.getNotEnrolledCourses(user._id).then((coursesList) => {
         res.render('user/dashboard', { coursesList, user, productsList });
     })
 });
@@ -50,6 +50,19 @@ router.post('/login', (req, res) => {
     })
 
 })
+
+router.get('/lectures/all_videos/', verifyLogin, async (req, res) => {
+
+    let user = req.session.user
+
+    let course_id = req.query.id
+
+    adminHelpers.getLectures(course_id).then((lecturesList) => {
+
+        res.render('user/lectures-list', { lecturesList, user });
+    })
+
+});
 
 router.post('/register', (req, res) => {
     delete req.body.CnfPassword
@@ -84,7 +97,7 @@ router.get('/profile', verifyLogin, (req, res) => {
     let user = req.session.user
 
 
-    res.render('user/profile', {user });
+    res.render('user/profile', { user });
 
 
 });
@@ -93,7 +106,7 @@ router.get('/profile', verifyLogin, (req, res) => {
 router.get('/my-courses', verifyLogin, (req, res) => {
     let user = req.session.user
 
-    userHelpers.getEnrolledCourses(user.UID).then((coursesList) => {
+    userHelpers.getEnrolledCourses(user._id).then((coursesList) => {
         res.render('user/my-courses', { coursesList, user });
     })
 
@@ -138,7 +151,7 @@ router.post('/confirm_payment', verifyLogin, (req, res) => {
     //     res.render('user/course-details', { course });
     // })
 
-    userHelpers.enrollCourse(req.body.course_id, req.session.user.UID, req.body.razorpay_order_id).then((order) => {
+    userHelpers.enrollCourse(req.body.course_id, req.session.user._id, req.body.razorpay_order_id).then((order) => {
         // console.log(order)
         res.json({ status: true })
     })

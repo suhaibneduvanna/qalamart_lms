@@ -16,20 +16,24 @@
 
 
             <div class="row d-flex justify-content-center">
+              {{#if coursesList}}
 
               {{#each coursesList}}
               <div class="card m-5" style="width: 18rem; background-color: #F5F7FF;;">
                 <img class="card-img-top" src="/uploads/course-thumbnail/{{this._id}}.jpg" alt="Card image cap">
                 <div class="card-body">
+                  <input hidden type="text" value="{{this.Price}}" id="course_price_{{@index}}">
+                  <input hidden type="text" value="{{this._id}}" id="course_id_{{@index}}">
                   <h5 class="card-title">{{this.Title}}</h5>
                   <p class="card-text">{{this.BriefDesc}}</p>
                   <br>
-                  <h4 class="font-weight-bold text-primary"><span class="text-dark">Course fee: </span>&#8377 {{this.Price}}</h4>
+                  <h4 class="font-weight-bold text-primary"><span class="text-dark">Course fee: </span>&#8377
+                    {{this.Price}}</h4>
                   <br>
                   <div class="d-flex justify-content-between">
 
                     <a href="/user/course-details?id={{this._id}}" class="btn w-100 btn-primary">
-                     
+
                       Details
                     </a>
 
@@ -42,6 +46,9 @@
 
               </div>
               {{/each}}
+              {{else}}
+              <p>No courses available</p>
+              {{/if}}
 
 
 

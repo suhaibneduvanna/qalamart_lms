@@ -1,0 +1,126 @@
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <h4 class="card-title">Edit User</h4>
+                        </div>
+
+                        {{!-- <p class="card-description">
+                            Basic form elements
+                        </p> --}}
+
+                        <br>
+                        <form id="update_user_form" class="forms-sample">
+                            <div class="form-group">
+                                <input hidden type="text" name="id" id="id" value="{{userData._id}}">
+                                <label for="cstitle">Username</label>
+                                <input value="{{userData.Username}}" name="Username" type="text" class="form-control"
+                                    id="no" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="cstitle">Email</label>
+                                <input value="{{userData.Email}}" name="Email" type="email" class="form-control"
+                                    id="title" placeholder="Email">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cstitle">Phone</label>
+                                <input value="{{userData.Phone}}" name="Phone" type="tel" class="form-control"
+                                    id="title" placeholder="Phone">
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+
+                            </div>
+                        </form>
+
+                    </div>
+                    <hr>
+                    <div class="card-body">
+                        <br>
+                        <div class="row d-flex justify-content-between p-3">
+                            <div>
+                                <h4 class="card-title pt-2">Enrolled Courses</h4>
+                                <p class="card-description">
+
+                                </p>
+                            </div>
+                            <a href="/admin/enroll" type="button" class="btn btn-primary btn-icon-text">
+                                <i class="ti-plus btn-icon-prepend"></i>
+                                Enroll
+                            </a>
+                        </div>
+
+
+
+                        <br>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Title
+                                        </th>
+                                        <th>
+                                            Category
+                                        </th>
+
+                                        <th>
+                                            Action
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each enrolledCourses}}
+                                    {{#each this.course_details}}
+
+                                    <tr>
+
+                                        <td>
+                                            {{this.Title}}
+                                        </td>
+                                        <td>
+                                            {{this.CsCategory}}
+                                        </td>
+
+                                        <td>
+                                            <a href="/admin/dismiss-user?id={{this._id}}"
+                                                class="btn btn-danger p-2">Leave</a>
+                                        </td>
+
+                                    </tr>
+                                    {{/each}}
+                                    {{/each}}
+                                    {{#each notEnrolledCourses}}
+                                    <tr>
+
+                                        <td>
+                                            {{this.Title}}
+                                        </td>
+                                        <td>
+                                            {{this.CsCategory}}
+                                        </td>
+
+                                        <td>
+                                            <a href="/admin/admit-user?id={{this._id}}"
+                                                class="btn btn-success p-2">Admit</a>
+                                        </td>
+
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

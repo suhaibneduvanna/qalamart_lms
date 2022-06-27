@@ -25323,17 +25323,29 @@ code {
 
 /* Cards */
 .card {
-  box-shadow: none;
+  box-shadow: 0 0.3rem 0.7rem rgba(0, 0, 0, 0.15) !important;
+
+  /* box-shadow: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
-  -ms-box-shadow: none;
+  -ms-box-shadow: none; */
   /* transition: background 0.25s ease; */
   /* -webkit-transition: background 0.25s ease;
   -moz-transition: background 0.25s ease;
   -ms-transition: background 0.25s ease; */
   border: none;
+  transition: transform 0.1s linear 0s;
+
+}
 
 
+.lecture:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.lecture-card:hover {
+  transform: scale(1.2)
 }
 
 /* .small-card {

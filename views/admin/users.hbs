@@ -38,10 +38,10 @@
                                             Progress
                                         </th>
                                         <th>
-                                            Amount
+                                            Edit
                                         </th>
                                         <th>
-                                            Deadline
+                                            Delete
                                         </th>
                                     </tr>
                                 </thead>
@@ -57,7 +57,7 @@
                                         <td>
                                             {{this.Username}}
                                         </td>
-                                         <td>
+                                        <td>
                                             {{this.Email}}
                                         </td>
                                         <td>
@@ -68,10 +68,12 @@
                                             </div>
                                         </td>
                                         <td>
-                                            $ 77.99
+                                            <a href="/admin/edit-user?id={{this._id}}" class="btn btn-primary">Edit</a>
                                         </td>
                                         <td>
-                                            May 15, 2015
+                                            <a href="/admin/delete-user?id={{this._id}}"
+                                                class="btn btn-danger">Delete</a>
+
                                         </td>
                                     </tr>
                                     {{/each}}

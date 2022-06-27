@@ -6,6 +6,7 @@ var objectId = require('mongodb').ObjectID
 // const { use } = require('../routes/user')
 // const productHelpers = require('./product-helpers')
 const Razorpay = require('razorpay');
+const collections = require('../config/collections')
 
 var instance = new Razorpay({ key_id: 'rzp_test_pF8PbdxO6F3DC6', key_secret: 'zetCHxRFjFceDBQMDKbC9i3t', });
 
@@ -57,10 +58,10 @@ module.exports = {
         }
 
         return new Promise(async (resolve, reject) => {
-            let userEnrolledCourses = await db.get().collection(collection.USER_ENROLLED_COLLECTIONS).findOne({ user: userId })
+            let userEnrolledCourses = await db.get().collection(collection.USER_ENROLLED_COLLECTIONS).findOne({ user: objectId(userId) })
             if (userEnrolledCourses) {
 
-                db.get().collection(collection.USER_ENROLLED_COLLECTIONS).updateOne({ user: userId }, {
+                db.get().collection(collection.USER_ENROLLED_COLLECTIONS).updateOne({ user: objectId(userId) }, {
 
                     $push: { courses_enrolled: courseObject }
 
@@ -72,7 +73,7 @@ module.exports = {
 
             } else {
                 let enrolledCoursesObject = {
-                    user: userId,
+                    user: objectId(userId),
                     courses_enrolled: [courseObject]
 
                 }
@@ -88,7 +89,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let userCourses = await db.get().collection(collection.USER_ENROLLED_COLLECTIONS).aggregate([
                 {
-                    $match: { user: userId }
+                    $match: { user: objectId(userId) }
                 },
 
                 {
@@ -124,9 +125,43 @@ module.exports = {
                 //     }
                 // }
             ]).toArray()
-            console.log(userCourses)
+
             resolve(userCourses)
         })
+    },
+
+    getNotEnrolledCourses: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            var result = []
+
+            let courseList = await db.get().collection(collection.USER_ENROLLED_COLLECTIONS).aggregate(
+                [
+                    {
+                        $match: { user: objectId(userId) }
+                    },
+                    {
+                        $unwind: '$courses_enrolled'
+                    },
+                    {
+                        $project: {
+                            "_id": 0,
+                            "courses_enrolled.course": 1
+
+                        }
+                    },
+
+
+
+
+
+                ]
+            ).toArray()
+
+            await courseList.forEach(function (document) { result.push(document.courses_enrolled.course) })
+            let unenrolledCourses = await db.get().collection(collections.COURSES_COLLECTIONS).find({ _id: { $nin: result } }).toArray()
+            resolve(unenrolledCourses)
+        })
+
     },
 
     cartCount: (userId) => {

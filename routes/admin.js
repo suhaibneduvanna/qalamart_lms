@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var adminHelpers = require("../helpers/admin-helpers")
+var userHelpers = require("../helpers/user-helpers")
+
 var fs = require('fs');
 const { redirect } = require('express/lib/response');
 const session = require('express-session');
@@ -38,7 +40,7 @@ router.get('/courses', verifyLogin, (req, res) => {
 });
 
 
-router.get('/lectures', verifyLogin, (req, res) => {
+router.get('/lectures', verifyLogin, async (req, res) => {
 
   let user = req.session.user
 
@@ -49,8 +51,37 @@ router.get('/lectures', verifyLogin, (req, res) => {
 
 });
 
+router.get('/lectures/all_videos/', verifyLogin, async (req, res) => {
+
+  let user = req.session.user
+
+  let course_id = req.query.id
+
+  adminHelpers.getLectures(course_id).then((lecturesList) => {
+
+    res.render('admin/lectures-list', { lecturesList, user });
+  })
+
+});
+
+router.get('/delete-lecture/', verifyLogin, async (req, res) => {
+
+  let course_id = req.query.id
+  let video_id = req.query.vid
+
+
+  adminHelpers.deleteLecture(course_id, video_id).then(() => {
+
+    res.json({ status: true })
+  })
+
+});
+
+
 router.get('/add-user', verifyLogin, (req, res) => {
-  res.render('admin/add-user');
+  let user = req.session.user
+
+  res.render('admin/add-user', { user });
 
 });
 
@@ -69,6 +100,51 @@ router.get('/users', (req, res) => {
 
 
 });
+router.get('/my-courses', verifyLogin, (req, res) => {
+  let user = req.session.user
+
+  userHelpers.getEnrolledCourses(user._id).then((coursesList) => {
+    res.render('user/my-courses', { coursesList, user });
+  })
+
+});
+router.get('/edit-user/', verifyLogin, async (req, res) => {
+  let user = req.session.user;
+  let uid = req.query.id;
+  let enrolledCourses = await userHelpers.getEnrolledCourses(uid);
+  let notEnrolledCourses = await userHelpers.getNotEnrolledCourses(uid);
+
+
+  adminHelpers.getUser(uid).then((userData) => {
+
+    res.render('admin/edit-user', { userData, enrolledCourses, notEnrolledCourses, user });
+  })
+
+
+});
+
+router.post('/edit-user', verifyLogin, (req, res) => {
+  let uid = req.body.id;
+
+  adminHelpers.updateUser(uid, req.body).then(() => {
+    res.json({ status: true })
+  })
+
+
+});
+
+router.post('/add-user', verifyLogin, (req, res) => {
+  delete req.body.CnfPassword
+  delete req.body.Agreement
+  req.body.UID = Date.now();
+  userHelpers.signUpFunction(req.body).then((response) => {
+    res.json({ status: true })
+
+  })
+
+})
+
+
 
 router.post('/login', (req, res) => {
 
@@ -175,8 +251,10 @@ router.get('/add-lecture', (req, res) => {
 })
 
 router.post('/add-lecture', async (req, res) => {
+  let course_id = req.body.Course
+  delete req.body.Course
 
-  adminHelpers.addLecture(req.body, (lecture) => {
+  adminHelpers.addLecture(course_id, req.body).then((response) => {
     res.json({ status: true })
   })
 
